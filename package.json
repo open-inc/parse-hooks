@@ -17,8 +17,8 @@
     }
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.openinc.de"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "files": [
     "dist"
