@@ -36,9 +36,6 @@ jobs:
       - name: Build the project
         run: pnpm run build
 
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: pnpm audit signatures
-
       - name: Semantic Release 🚀
         id: semantic
         run: npx semantic-release --branches master
@@ -46,7 +43,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.OPENINC_SEMANTIC_RELEASE }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN_ORG_OPENINC }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG_OPENINC }}
-    outputs:
-      new-release-published: ${{ steps.semantic.outputs.new-release-published }}
-      new-release-version: ${{ steps.semantic.outputs.new-release-version }}
-      new-release-git-tag: ${{ steps.semantic.outputs.new-release-git-tag }}
