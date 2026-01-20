@@ -9,76 +9,44 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      packages: write
       pull-requests: write
-      id-token: write
+      issues: write
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          # Fetch full history for changeset
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🟢 Setup Node.js
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        id: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: "https://registry.npmjs.org/"
+          scope: "@openinc"
+          cache: "pnpm"
 
-      - name: 🔐 Login to NPM
-        uses: open-inc/github-action-npm-login@v1
-        env:
-          NPM_REGISTRY: ${{ secrets.OPENINC_NPM_REGISTRY }}
-          NPM_TOKEN: ${{ secrets.OPENINC_NPM_TOKEN }}
-
-      - name: ⚙️ Enable Corepack and install pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: pnpm install
 
-      - name: 🔄 Generate Changesets from commits
-        run: pnpm gen-changesets
+      - name: Build the project
+        run: pnpm run build
 
-      - name: ⚙️ Configure Git user
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: pnpm audit signatures
 
-      - name: 💾 Commit Changesets if any
+      - name: Semantic Release 🚀
+        id: semantic
+        run: npx semantic-release --branches master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -n "$(git status --porcelain .changeset)" ]; then
-            git add .changeset
-            git commit -m "chore: auto generated changesets [skip ci]"
-            git push
-          else
-            echo "No new changesets to commit."
-          fi
-
-      - name: 📝 Create version bump and changelog
-        run: pnpm changeset version
-
-      - name: 🔨 Build packages
-        run: pnpm run build-nightlies
-
-      - name: 💾 Commit Version Bumps
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            git add .
-            git commit -m "chore: version bump [skip ci]"
-            git push
-          else
-            echo "No version changes to commit"
-          fi
-
-      - name: 🚀 Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.OPENINC_NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.OPENINC_NPM_TOKEN }}
-        run: pnpm changeset publish
+          GITHUB_TOKEN: ${{ secrets.OPENINC_SEMANTIC_RELEASE }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ORG_OPENINC }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG_OPENINC }}
+    outputs:
+      new-release-published: ${{ steps.semantic.outputs.new-release-published }}
+      new-release-version: ${{ steps.semantic.outputs.new-release-version }}
+      new-release-git-tag: ${{ steps.semantic.outputs.new-release-git-tag }}
