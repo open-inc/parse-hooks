@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/open-inc/parse-hooks/compare/v1.0.1...v1.0.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* Fix types to use in frontend ([d309110](https://github.com/open-inc/parse-hooks/commit/d30911005fa1dbac4fe52a2e55ab827ac34e1976))
+
 ## [1.0.1](https://github.com/open-inc/parse-hooks/compare/v1.0.0...v1.0.1) (2026-01-20)
 
 
