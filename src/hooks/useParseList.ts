@@ -1,4 +1,4 @@
-import Parse from "parse/node.js";
+import Parse from "parse";
 import React from "react";
 
 type Result<T> = {

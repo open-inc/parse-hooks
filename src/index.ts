@@ -1,4 +1,4 @@
-import Parse from "parse/node.js";
+import Parse from "parse";
 export { useObjectState } from "./hooks/useObjectState.js";
 export { useParseFunction } from "./hooks/useParseFunction.js";
 export { useParseGet } from "./hooks/useParseGet.js";

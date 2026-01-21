@@ -1,4 +1,4 @@
-declare module "parse/node.js" {
-  import Parse from "parse/node.js";
-  export = Parse;
-}
+// declare module "parse" {
+//   import Parse from "parse";
+//   export = Parse;
+// }

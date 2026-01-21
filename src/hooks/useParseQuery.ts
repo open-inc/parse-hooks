@@ -1,4 +1,4 @@
-import Parse from "parse/node.js";
+import LiveQuerySubscription from "parse/types/LiveQuerySubscription";
 import React from "react";
 
 type Result<T> = {
@@ -18,7 +18,7 @@ export function useParseQuery<T extends Parse.Object>(
     reloadThrottle?: number;
   }
 ): Result<T> {
-  const subscriptionRef = React.useRef<Parse.LiveQuerySubscription>();
+  const subscriptionRef = React.useRef<LiveQuerySubscription>();
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>();
   const throttleRef = React.useRef<boolean>(false);
 

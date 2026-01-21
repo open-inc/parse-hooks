@@ -1,4 +1,4 @@
-import Parse from "parse/node.js";
+import Parse from "parse";
 import React from "react";
 
 type Result<T> = {
@@ -22,7 +22,7 @@ export function useParseGet<T extends Parse.Object>(
 
   async function fetch() {
     if (cls && id) {
-      const query = new Parse.Query(cls as Parse.Object);
+      const query = new Parse.Query(cls);
 
       if (options?.includes) {
         for (const include of options.includes) {
