@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/open-inc/parse-hooks/compare/v1.0.2...v1.0.3) (2026-05-06)
+
+
+### Bug Fixes
+
+* exports ([3bdf1f8](https://github.com/open-inc/parse-hooks/commit/3bdf1f8777eebdeeadb3b0ec2970d380e2f1b53b))
+* parse version in lock ([4515957](https://github.com/open-inc/parse-hooks/commit/4515957bc0e43329c15f00c6a0e3ecea6b0a55ca))
+
 ## [1.0.2](https://github.com/open-inc/parse-hooks/compare/v1.0.1...v1.0.2) (2026-01-21)
 
 
