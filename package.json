@@ -67,7 +67,7 @@
     "semantic-release": "^25.0.2"
   },
   "peerDependencies": {
-    "parse": "^7.1.2",
+    "parse": "^8.6.0",
     "react": "^18.2.0"
   },
   "devDependencies": {
