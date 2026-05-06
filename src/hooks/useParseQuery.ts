@@ -1,4 +1,4 @@
-import LiveQuerySubscription from "parse/types/LiveQuerySubscription";
+import { LiveQuerySubscription } from "parse";
 import React from "react";
 
 type Result<T> = {
